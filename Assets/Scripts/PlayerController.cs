@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float playerSpeed = 2.0f;
+    private float playerSpeed = 7.0f;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private Transform bulletParent;
     [SerializeField]
     private float bulletHitMissDistance = 25f;
+    [SerializeField]
+    private float animationSmoothTime = 0.05f;
+    [SerializeField]
+    private float animationPlayTransition = 0.15f;
 
     private CharacterController controller;
     private PlayerInput playerInput;
@@ -32,6 +36,13 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction shootAction;
 
+    private Animator animator;
+    int jumpAnimationParam;
+    int moveXAnimationParam;
+    int moveZAnimationParam;
+
+    Vector2 currentAnimationBlend;
+    Vector2 animationVelocity;
 
     private void Awake()
     {   
@@ -48,7 +59,14 @@ public class PlayerController : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         shootAction = playerInput.actions["Shoot"];
 
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Animatons
+        animator = GetComponent<Animator>();
+        jumpAnimationParam = Animator.StringToHash("Pistol Jump");
+        moveXAnimationParam = Animator.StringToHash("MoveX");
+        moveZAnimationParam = Animator.StringToHash("MoveZ");
+        
     }
 
    
@@ -95,18 +113,22 @@ public class PlayerController : MonoBehaviour
         
         // to read value
         Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 move = new Vector3(input.x, 0, input.y);
+        currentAnimationBlend = Vector2.SmoothDamp(currentAnimationBlend, input, ref animationVelocity, animationSmoothTime);
+        Vector3 move = new Vector3(currentAnimationBlend.x, 0, currentAnimationBlend.y);
         // to move in the direction of camera
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
-        
+        // Blend Strafe Animations
+        animator.SetFloat(moveXAnimationParam, currentAnimationBlend.x);
+        animator.SetFloat(moveZAnimationParam, currentAnimationBlend.y);
 
         // Changes the height position of the player..
         if (jumpAction.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            animator.CrossFade(jumpAnimationParam, animationPlayTransition);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
