@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
@@ -28,6 +29,14 @@ public class PlayerController : MonoBehaviour
     private Transform aimTarget;
     [SerializeField]
     private float aimDistance = 10f;
+    [SerializeField]
+    float damage = 30f;
+    [SerializeField]
+    ParticleSystem muzzleFlash;
+    [SerializeField]
+    Ammo ammoSlot;
+    [SerializeField]
+    AmmoType ammoType;
 
     private CharacterController controller;
     private PlayerInput playerInput;
@@ -86,21 +95,49 @@ public class PlayerController : MonoBehaviour
 
     private void ShootGun()
     {
+        if (ammoSlot.CurrentAmmo(ammoType) >= 1)
+        {
+            PlayMuzzleFlash();
+            RayCast();
+            ammoSlot.ReduceCurrentAmmo(ammoType);
+        }
+
+        else
+        {
+            Debug.Log("no ammo");
+        }
+
+
+    }
+
+    private void PlayMuzzleFlash()
+    {
+        muzzleFlash.Play();
+    }
+
+    private void RayCast()
+    {
         RaycastHit hit;
         GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
         BulletController bulletController = bullet.GetComponent<BulletController>();
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
         {
-            
+            Destroy(bullet, 0.5f);
             bulletController.target = hit.point;
             bulletController.hit = true;
 
+            // decrease enemy health
+            EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
+            if (target == null) return;
+            // call method on Enemy health;
+            target.TakeDamage(damage);
         }
 
         else
         {
-            bulletController.target = cameraTransform.position + cameraTransform.forward * bulletHitMissDistance;
-            bulletController.hit = false;
+            // bulletController.target = cameraTransform.position + cameraTransform.forward * bulletHitMissDistance;
+            // bulletController.hit = false;
+            return;
         }
     }
 
