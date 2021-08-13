@@ -16,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
     }
     // reduce hitpoints
 
+    // Player shooting enemy
     public void TakeDamage(float damage)
     {
         BroadcastMessage("OnDamageTaken");
@@ -26,6 +27,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    // enemy death function
     private void Death()
     {
         if (isDead) return;

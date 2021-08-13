@@ -78,6 +78,7 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.5\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovementNoCamera.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
@@ -134,7 +135,8 @@
     <Compile Include="Assets\Samples\Cinemachine\2.6.5\Cinemachine Example Scenes\Scenes\Anywhere Door\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.6.5\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovement.cs" />
-    <Compile Include="Assets\Scripts\Health.cs" />
+    <Compile Include="Assets\Scripts\final.cs" />
+    <Compile Include="Assets\Scripts\audio.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

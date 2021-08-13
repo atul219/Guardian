@@ -11,6 +11,13 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1;
+
+    }
+    // To exit the game
     public void ExitGame()
     {
         if (Application.isEditor)

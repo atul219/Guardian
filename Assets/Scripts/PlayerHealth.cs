@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     float health = 100f;
 
 
+    // health reduced on damage
     public void TakeDamage(float damage) 
     {
         Health.currentHealth -= damage;

@@ -17,6 +17,7 @@ public class EnemyAttack : MonoBehaviour
     }
 
     
+    // When enemy attack player
     public void AttackHitEvent()
     {
         if (target == null) return;

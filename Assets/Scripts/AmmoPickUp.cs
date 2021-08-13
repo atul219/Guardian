@@ -9,6 +9,7 @@ public class AmmoPickUp : MonoBehaviour
     [SerializeField]
     AmmoType ammoType;
 
+    // to pick ammo
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

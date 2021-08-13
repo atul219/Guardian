@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-   
+   // when player shoots
     private void OnEnable()
     {
         shootAction.performed += _ => ShootGun();
@@ -110,11 +110,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // to show particle effect on shooting
     private void PlayMuzzleFlash()
     {
         muzzleFlash.Play();
     }
 
+    // to aim enemy
     private void RayCast()
     {
         RaycastHit hit;

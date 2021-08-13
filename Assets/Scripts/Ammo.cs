@@ -14,21 +14,25 @@ public class Ammo : MonoBehaviour
         public int ammoCount;
     }
 
+    // to find current ammo
     public int CurrentAmmo(AmmoType ammoType)
     {
         return GetAmmoSlot(ammoType).ammoCount;
     }
 
+    // amount count after shooting
     public void ReduceCurrentAmmo(AmmoType ammoType)
     {
         GetAmmoSlot(ammoType).ammoCount--;
     }
 
+    // ammo count after collecting ammo
     public void IncreaseCurrentAmmo(AmmoType ammoType, int ammoAmount)
     {
         GetAmmoSlot(ammoType).ammoCount += ammoAmount;
     }
 
+    // if there are different weapons
     private AmmoSlot GetAmmoSlot(AmmoType ammoType)
     {
         foreach (AmmoSlot slot in ammoSlots)
